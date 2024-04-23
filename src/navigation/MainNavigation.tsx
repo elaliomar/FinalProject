@@ -1,18 +1,12 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import LogInScreen from '../screens/LogInScreen';
-import SignUpScreen from '../screens/SignUpScreen';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
+import UnAuthStack from './UnAuthStack';
+import AuthStack from './AuthStack';
 
-const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{headerShown: false}}
-      initialRouteName="LogIn">
-      <Stack.Screen name="LogIn" component={LogInScreen} />
-      <Stack.Screen name="SignUp" component={SignUpScreen} />
-    </Stack.Navigator>
-  );
+  const authToken = useSelector((state: RootState) => state.auth.authToken);
+  return authToken ? <AuthStack /> : <UnAuthStack />;
 };
 
 export default MainNavigation;

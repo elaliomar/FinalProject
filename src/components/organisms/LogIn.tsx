@@ -1,22 +1,26 @@
 import {
-  StyleSheet,
   Text,
   View,
   ScrollView,
   ImageBackground,
-  Dimensions,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomInputText from '../molecules/CustomInputText';
 import CustomButton from '../atoms/CustomButton';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {AuthStackParamList} from '../../types/authTypes';
-import {Formik} from 'formik';
+import {Formik, FormikHelpers} from 'formik';
 import * as yup from 'yup';
 import styles from '../../utils/authStyles';
 import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
+import axios, {AxiosError} from 'axios';
+import {setAuthToken} from '../../redux/slices/authSlice';
+import {useDispatch} from 'react-redux';
+import {UserCredentials} from '../../types/userCredientials';
+import handleApiResponseError from '../../utils/authErrorHandle';
 
 type LoginScreenNavigationProp = NavigationProp<AuthStackParamList, 'LogIn'>;
 
@@ -33,8 +37,42 @@ const validationSchema = yup.object().shape({
 
 const LogIn = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
-  const handleFormSubmit = (values: {email: string; password: string}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const handleFormSubmit = async (
+    values: UserCredentials,
+    formikHelpers: FormikHelpers<{
+      email: string;
+      password: string;
+    }>,
+  ) => {
     console.log(values);
+    const userData = {
+      email: values.email,
+      password: values.password,
+    };
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        'https://backend-practice.euriskomobility.me/login',
+        userData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log(JSON.stringify(userData));
+      console.log('Data getted successfully:', response.data);
+      if (response.status === 200) {
+        dispatch(setAuthToken(response.data.accessToken));
+      }
+    } catch (error) {
+      handleApiResponseError(error as AxiosError, 'login');
+    } finally {
+      setIsLoading(false);
+      formikHelpers.resetForm();
+    }
   };
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -54,7 +92,7 @@ const LogIn = () => {
           <View style={styles.nestedContainer}>
             <Text>Don't have an account?</Text>
             <Pressable onPress={() => navigation.navigate('SignUp')}>
-              <Text style={styles.secondContainerText}>Sign up</Text>
+              <Text style={styles.secondContainerText}>LogIn</Text>
             </Pressable>
           </View>
           <Formik
@@ -92,7 +130,11 @@ const LogIn = () => {
                     <Text style={styles.error}>{errors.password}</Text>
                   )}
                 </Animated.View>
-                <CustomButton onPress={handleSubmit} title="LogIn" />
+                {isLoading ? (
+                  <ActivityIndicator size={'large'} color="#eb5d0c" />
+                ) : (
+                  <CustomButton onPress={handleSubmit} title="SignUp" />
+                )}
               </View>
             )}
           </Formik>
