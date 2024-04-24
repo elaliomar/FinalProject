@@ -1,14 +1,39 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
+import FavoriteScreen from '../screens/FavoriteScreen';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
+    <Tab.Navigator initialRouteName="News">
+      <Tab.Screen
+        name="News"
+        component={HomeScreen}
+        options={{
+          headerTitleAlign: 'center',
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#eb5d0c',
+          tabBarIcon: ({color}) => (
+            <Icon name="newspaper-o" size={30} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Favorite"
+        component={FavoriteScreen}
+        options={{
+          headerTitleAlign: 'center',
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#eb5d0c',
+          tabBarIcon: ({color}) => (
+            <Icon name="star-o" size={30} color={color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
