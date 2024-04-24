@@ -1,7 +1,7 @@
 import  { AxiosError } from 'axios';
 import { Alert } from 'react-native';
 
-const handleApiResponseError = (error: AxiosError, context: 'login' | 'signup') => {
+const handleApiResponseError = (error: AxiosError, context: 'login' | 'signup' ) => {
     if (error.response) {
         switch (error.response.status) {
             case 201:  

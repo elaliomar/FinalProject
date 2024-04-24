@@ -12,6 +12,7 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authReducer from './slices/authSlice';
+import {setupInterceptors} from '../utils/services/axiosInterceptore';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -33,6 +34,8 @@ export const store = configureStore({
       },
     }),
 });
+
+setupInterceptors(store);
 
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;

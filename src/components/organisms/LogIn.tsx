@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Pressable,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -17,10 +18,11 @@ import * as yup from 'yup';
 import styles from '../../utils/authStyles';
 import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
 import axios, {AxiosError} from 'axios';
-import {setAuthToken} from '../../redux/slices/authSlice';
+// import {setAuthToken} from '../../redux/slices/authSlice';
 import {useDispatch} from 'react-redux';
 import {UserCredentials} from '../../types/userCredientials';
 import handleApiResponseError from '../../utils/authErrorHandle';
+import {setAccessToken, setRefreshToken} from '../../redux/slices/authSlice';
 
 type LoginScreenNavigationProp = NavigationProp<AuthStackParamList, 'LogIn'>;
 
@@ -65,7 +67,14 @@ const LogIn = () => {
       console.log(JSON.stringify(userData));
       console.log('Data getted successfully:', response.data);
       if (response.status === 200) {
-        dispatch(setAuthToken(response.data.accessToken));
+        dispatch(setAccessToken(response.data.accessToken));
+        dispatch(setRefreshToken(response.data.refreshToken));
+        // dispatch(
+        //   setTokens({
+        //     authToken: response.data.accessToken,
+        //     refreshToken: response.data.refreshToken,
+        //   }),
+        // );
       }
     } catch (error) {
       handleApiResponseError(error as AxiosError, 'login');
@@ -75,72 +84,78 @@ const LogIn = () => {
     }
   };
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        source={require('../../assets/background.png')}
-        style={styles.imageStyle}>
-        <Animated.View
-          style={styles.headerContainer}
-          entering={FadeInUp.delay(200).duration(1000).springify().damping(3)}>
-          <Icon name="key" color={'white'} size={50} />
-          <Text style={styles.headerText}>Log In</Text>
-        </Animated.View>
-      </ImageBackground>
-      <View style={styles.secondContainer}>
-        <View style={styles.secondContainerView}>
-          <Text style={styles.secondContainerTitle}>Welcome</Text>
-          <View style={styles.nestedContainer}>
-            <Text>Don't have an account?</Text>
-            <Pressable onPress={() => navigation.navigate('SignUp')}>
-              <Text style={styles.secondContainerText}>LogIn</Text>
-            </Pressable>
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <ImageBackground
+          source={require('../../assets/background.png')}
+          style={styles.imageStyle}>
+          <Animated.View
+            style={styles.headerContainer}
+            entering={FadeInUp.delay(200)
+              .duration(1000)
+              .springify()
+              .damping(3)}>
+            <Icon name="key" color={'white'} size={50} />
+            <Text style={styles.headerText}>Log In</Text>
+          </Animated.View>
+        </ImageBackground>
+        <View style={styles.secondContainer}>
+          <View style={styles.secondContainerView}>
+            <Text style={styles.secondContainerTitle}>Welcome</Text>
+            <View style={styles.nestedContainer}>
+              <Text>Don't have an account?</Text>
+              <Pressable onPress={() => navigation.navigate('SignUp')}>
+                <Text style={styles.secondContainerText}>Sign Up</Text>
+              </Pressable>
+            </View>
+            <Formik
+              initialValues={{email: '', password: ''}}
+              validationSchema={validationSchema}
+              onSubmit={handleFormSubmit}>
+              {({handleChange, handleSubmit, values, errors}) => (
+                <View style={styles.thirdContainer}>
+                  <Animated.View
+                    style={styles.inputContainer}
+                    entering={FadeInDown.duration(1000).springify()}>
+                    <CustomInputText
+                      placeholder="Email"
+                      placeholderTextColor={'gray'}
+                      onChangeText={handleChange('email')}
+                      value={values.email}
+                      name="email"
+                    />
+                    {errors.email && (
+                      <Text style={styles.error}>{errors.email}</Text>
+                    )}
+                  </Animated.View>
+                  <Animated.View
+                    style={styles.inputContainer}
+                    entering={FadeInDown.delay(200).duration(1000).springify()}>
+                    <CustomInputText
+                      placeholder="Password"
+                      placeholderTextColor={'gray'}
+                      onChangeText={handleChange('password')}
+                      value={values.password}
+                      secureTextEntry
+                      name="key"
+                    />
+                    {errors.password && (
+                      <Text style={styles.error}>{errors.password}</Text>
+                    )}
+                  </Animated.View>
+                  {isLoading ? (
+                    <ActivityIndicator size={'large'} color="#eb5d0c" />
+                  ) : (
+                    <CustomButton onPress={handleSubmit} title="LogIn" />
+                  )}
+                </View>
+              )}
+            </Formik>
           </View>
-          <Formik
-            initialValues={{email: '', password: ''}}
-            validationSchema={validationSchema}
-            onSubmit={handleFormSubmit}>
-            {({handleChange, handleSubmit, values, errors}) => (
-              <View style={styles.thirdContainer}>
-                <Animated.View
-                  style={styles.inputContainer}
-                  entering={FadeInDown.duration(1000).springify()}>
-                  <CustomInputText
-                    placeholder="Email"
-                    placeholderTextColor={'gray'}
-                    onChangeText={handleChange('email')}
-                    value={values.email}
-                    name="email"
-                  />
-                  {errors.email && (
-                    <Text style={styles.error}>{errors.email}</Text>
-                  )}
-                </Animated.View>
-                <Animated.View
-                  style={styles.inputContainer}
-                  entering={FadeInDown.delay(200).duration(1000).springify()}>
-                  <CustomInputText
-                    placeholder="Password"
-                    placeholderTextColor={'gray'}
-                    onChangeText={handleChange('password')}
-                    value={values.password}
-                    secureTextEntry
-                    name="key"
-                  />
-                  {errors.password && (
-                    <Text style={styles.error}>{errors.password}</Text>
-                  )}
-                </Animated.View>
-                {isLoading ? (
-                  <ActivityIndicator size={'large'} color="#eb5d0c" />
-                ) : (
-                  <CustomButton onPress={handleSubmit} title="SignUp" />
-                )}
-              </View>
-            )}
-          </Formik>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 

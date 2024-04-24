@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Pressable,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -62,6 +63,10 @@ const SignUp = () => {
       );
       console.log(JSON.stringify(userData));
       console.log('Data posted successfully:', response.data);
+      if (response.status === 201) {
+        Alert.alert('User created successfully');
+        navigation.navigate('LogIn');
+      }
     } catch (error) {
       handleApiResponseError(error as AxiosError, 'signup');
     } finally {
