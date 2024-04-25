@@ -11,6 +11,7 @@ import {NewsData} from '../../types/newsTypes';
 import usePullToRefresh from '../../utils/usePullToRefresh';
 import NewsPost from '../molecules/NewsPost';
 import CustomLoader from '../molecules/CustomLoader';
+import FeedHeader from '../molecules/FeedHeader';
 
 const Feed = () => {
   const [serverData, setServerData] = useState<NewsData[] | null>([]);
@@ -89,6 +90,7 @@ const Feed = () => {
           initialNumToRender={10}
           maxToRenderPerBatch={10}
           ListFooterComponent={renderFooter}
+          ListHeaderComponent={<FeedHeader />}
           onEndReached={fetchPosts}
           onEndReachedThreshold={0.5}
           refreshing={refreshing}
