@@ -8,14 +8,28 @@ const Tab = createBottomTabNavigator();
 
 const AuthStack = () => {
   return (
-    <Tab.Navigator initialRouteName="News">
+    <Tab.Navigator
+      initialRouteName="News"
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerShown: false,
+        tabBarStyle: {
+          height: 60,
+          position: 'absolute',
+          bottom: 30,
+          right: 16,
+          left: 16,
+          borderRadius: 15,
+          backgroundColor: '#eb5d0c',
+        },
+      }}>
       <Tab.Screen
         name="News"
         component={HomeScreen}
         options={{
-          headerTitleAlign: 'center',
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#eb5d0c',
+          tabBarActiveTintColor: 'white',
+          tabBarInactiveTintColor: 'black',
           tabBarIcon: ({color}) => (
             <Icon name="newspaper-o" size={30} color={color} />
           ),
@@ -25,9 +39,9 @@ const AuthStack = () => {
         name="Favorite"
         component={FavoriteScreen}
         options={{
-          headerTitleAlign: 'center',
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#eb5d0c',
+          tabBarActiveTintColor: 'white',
+          tabBarInactiveTintColor: 'black',
           tabBarIcon: ({color}) => (
             <Icon name="star-o" size={30} color={color} />
           ),

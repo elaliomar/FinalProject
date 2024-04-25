@@ -10,6 +10,7 @@ import {api} from '../../utils/services/axiosInterceptore';
 import {NewsData} from '../../types/newsTypes';
 import usePullToRefresh from '../../utils/usePullToRefresh';
 import NewsPost from '../molecules/NewsPost';
+import CustomLoader from '../molecules/CustomLoader';
 
 const Feed = () => {
   const [serverData, setServerData] = useState<NewsData[] | null>([]);
@@ -40,7 +41,6 @@ const Feed = () => {
         .catch(err => {
           console.log(err);
         });
-      //   return response.data;
     }
   };
 
@@ -56,11 +56,16 @@ const Feed = () => {
     return (
       <View style={styles.loaderView}>
         {isLoading ? (
-          <ActivityIndicator color={'#eb5d0c'} style={styles.loader} />
+          // <ActivityIndicator color={'#eb5d0c'} style={styles.loader} />
+          <CustomLoader />
         ) : null}
       </View>
     );
   };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [page]);
 
   const renderPosts = ({item}: {item: NewsData}) => {
     return (
@@ -68,14 +73,12 @@ const Feed = () => {
         id={item.id}
         title={item.title}
         image_url={item.image_url}
-        source_id={item.source_id}
+        pubDate={item.pubDate}
+        country={item.country}
       />
     );
   };
 
-  useEffect(() => {
-    fetchPosts();
-  }, [page]);
   return (
     <View style={styles.page}>
       {serverData && (

@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomInputText from '../molecules/CustomInputText';
 import CustomButton from '../atoms/CustomButton';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
-import {AuthStackParamList} from '../../types/authTypes';
+import {unAuthStackParamList} from '../../types/unAuthTypes';
 import {Formik, FormikHelpers} from 'formik';
 import * as yup from 'yup';
 import styles from '../../utils/authStyles';
@@ -21,7 +21,7 @@ import axios, {AxiosError} from 'axios';
 import handleApiResponseError from '../../utils/authErrorHandle';
 import {UserCredentials} from '../../types/userCredientials';
 
-type SignScreenNavigationProp = NavigationProp<AuthStackParamList, 'SignUp'>;
+type SignScreenNavigationProp = NavigationProp<unAuthStackParamList, 'SignUp'>;
 
 const validationSchema = yup.object().shape({
   email: yup

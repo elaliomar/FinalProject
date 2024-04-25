@@ -1,18 +1,79 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import React from 'react';
 import {NewsData} from '../../types/newsTypes';
 
-const NewsPost = ({id, title, image_url, source_id}: NewsData) => {
+const NewsPost = ({id, title, image_url, pubDate, country}: NewsData) => {
+  const dateWithoutTime = pubDate?.substring(0, 10);
   return (
-    <View>
-      <Text>{id}</Text>
-      <Text>{title}</Text>
-      <Image source={{uri: image_url}} style={{height: 100, width: 100}} />
-      <Text>{source_id}</Text>
-    </View>
+    <Pressable style={styles.mainContainer}>
+      <View>
+        {image_url === null ? (
+          <Image
+            source={require('../../assets/emtyImage.png')}
+            style={styles.imageStyle}
+          />
+        ) : (
+          <Image source={{uri: image_url}} style={styles.imageStyle} />
+        )}
+      </View>
+      <View style={styles.secondContainer}>
+        <View style={styles.thirdContainer}>
+          <Text style={styles.countryText}>
+            {country && country.length > 0
+              ? country[0]
+              : 'Country not available'}
+          </Text>
+          <View style={styles.slpitLine} />
+          <Text style={styles.dateText}>{dateWithoutTime}</Text>
+        </View>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    </Pressable>
   );
 };
 
-export default NewsPost;
+export default React.memo(NewsPost);
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  mainContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: 'lightgrey',
+  },
+
+  imageStyle: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#d3d3d3',
+    resizeMode: 'cover',
+  },
+  secondContainer: {
+    paddingHorizontal: 7,
+    flex: 1,
+  },
+  thirdContainer: {
+    marginVertical: 2,
+    flexDirection: 'row',
+  },
+  countryText: {
+    marginRight: 5,
+    color: '#eb5d0c',
+  },
+  slpitLine: {
+    borderRightWidth: 2,
+    borderColor: '#eb5d0c',
+    height: 18,
+  },
+  dateText: {
+    marginLeft: 5,
+  },
+  title: {
+    lineHeight: 20,
+    fontWeight: 'bold',
+    fontSize: 15,
+    color: 'black',
+  },
+});

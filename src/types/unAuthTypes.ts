@@ -1,4 +1,4 @@
-export type AuthStackParamList = {
+export type unAuthStackParamList = {
     LogIn: undefined;
     SignUp: undefined;
   };
