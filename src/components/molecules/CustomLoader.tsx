@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: 100,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    padding: 10,
+    padding: 20,
     marginVertical: 10,
   },
   secondContainer: {

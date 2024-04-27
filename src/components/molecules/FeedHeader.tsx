@@ -1,23 +1,23 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
-import React from 'react';
-import CustomInputText from './CustomInputText';
+import {StyleSheet, Text, View, Image, Platform} from 'react-native';
+import React, {useState} from 'react';
 
 const FeedHeader = () => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.secondContainer}>
-        <Image
-          source={require('../../assets/androidIcon.png')}
-          style={styles.imageStyle}
-        />
+        {Platform.OS === 'android' ? (
+          <Image
+            source={require('../../assets/androidIcon.png')}
+            style={styles.imageStyle}
+          />
+        ) : (
+          <Image
+            source={require('../../assets/iosIcon.png')}
+            style={styles.imageStyle}
+          />
+        )}
+
         <Text style={styles.Title}>News24</Text>
-      </View>
-      <View style={styles.inputText}>
-        <CustomInputText
-          placeholder="Search"
-          placeholderTextColor={'gray'}
-          name="search"
-        />
       </View>
     </View>
   );
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     resizeMode: 'contain',
-    width: 30,
-    height: 25,
+    width: Platform.OS === 'android' ? 30 : 30,
+    height: Platform.OS === 'android' ? 25 : 20,
   },
   secondContainer: {
     flexDirection: 'row',
@@ -46,11 +46,5 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: 'white',
-  },
-  inputText: {
-    backgroundColor: 'white',
-    marginVertical: 10,
-    padding: 3,
-    borderRadius: 10,
   },
 });

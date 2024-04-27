@@ -1,11 +1,26 @@
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import React from 'react';
 import {NewsData} from '../../types/newsTypes';
+import {useNavigation} from '@react-navigation/native';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {authBottomStackParamList} from '../../types/authBottomTab';
 
-const NewsPost = ({id, title, image_url, pubDate, country}: NewsData) => {
+const NewsPost = ({_id, title, image_url, pubDate, country}: NewsData) => {
+  const navigation =
+    useNavigation<
+      BottomTabNavigationProp<authBottomStackParamList, 'Details'>
+    >();
+  const handlePress = () => {
+    navigation.navigate('Details', {
+      postId: _id,
+    });
+  };
   const dateWithoutTime = pubDate?.substring(0, 10);
   return (
-    <Pressable style={styles.mainContainer}>
+    <Pressable
+      style={styles.mainContainer}
+      android_ripple={styles.pressableStyle}
+      onPress={handlePress}>
       <View>
         {image_url === null ? (
           <Image
@@ -75,5 +90,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
     color: 'black',
+  },
+  pressableStyle: {
+    color: '#cccccc',
   },
 });

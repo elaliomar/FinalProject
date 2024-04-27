@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-} from 'react-native';
+import {View, StyleSheet, FlatList, RefreshControl} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {api} from '../../utils/services/axiosInterceptore';
 import {NewsData} from '../../types/newsTypes';
@@ -25,7 +19,7 @@ const Feed = () => {
       await api
         .get(`/posts?page=${page}`)
         .then(response => {
-          console.log('fetched successful ', response.data);
+          // console.log('fetched successful ', response.data);
           console.log('length', response.data.results.length);
           if (response.data.results.length > 0) {
             setPage(prevPage => prevPage + 1);
@@ -71,7 +65,7 @@ const Feed = () => {
   const renderPosts = ({item}: {item: NewsData}) => {
     return (
       <NewsPost
-        id={item.id}
+        _id={item._id}
         title={item.title}
         image_url={item.image_url}
         pubDate={item.pubDate}
@@ -85,7 +79,7 @@ const Feed = () => {
       {serverData && (
         <FlatList
           data={serverData}
-          keyExtractor={(item, index) => `${item.id}_${index}`}
+          keyExtractor={(item, index) => `${item._id}_${index}`}
           renderItem={renderPosts}
           initialNumToRender={10}
           maxToRenderPerBatch={10}
