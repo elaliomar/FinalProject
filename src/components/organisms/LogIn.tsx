@@ -47,7 +47,6 @@ const LogIn = () => {
       password: string;
     }>,
   ) => {
-    console.log(values);
     const userData = {
       email: values.email,
       password: values.password,
@@ -63,8 +62,6 @@ const LogIn = () => {
           },
         },
       );
-      console.log(JSON.stringify(userData));
-      console.log('Data getted successfully:', response.data);
       if (response.status === 200) {
         dispatch(setAccessToken(response.data.accessToken));
         dispatch(setRefreshToken(response.data.refreshToken));

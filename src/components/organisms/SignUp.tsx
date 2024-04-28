@@ -44,7 +44,6 @@ const SignUp = () => {
       password: string;
     }>,
   ) => {
-    console.log(values);
     const userData = {
       email: values.email,
       password: values.password,
@@ -61,8 +60,6 @@ const SignUp = () => {
           },
         },
       );
-      console.log(JSON.stringify(userData));
-      console.log('Data posted successfully:', response.data);
       if (response.status === 201) {
         Alert.alert('User created successfully');
         navigation.navigate('LogIn');

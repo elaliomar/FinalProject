@@ -88,13 +88,17 @@ const Details = () => {
                   : 'Country not available'}
               </Text>
               <Text style={styles.keywords}>
-                {news.keywords?.map((keyword, index) => {
-                  return (
-                    <Text key={index} style={styles.keywords}>
-                      {keyword} ·{' '}
-                    </Text>
-                  );
-                })}
+                {news.keywords != null ? (
+                  news.keywords?.map((keyword, index) => {
+                    return (
+                      <Text key={index} style={styles.keywords}>
+                        #{keyword} ·{' '}
+                      </Text>
+                    );
+                  })
+                ) : (
+                  <Text style={styles.keywords}>No keywords</Text>
+                )}
               </Text>
               <View style={styles.divider} />
 
@@ -119,7 +123,11 @@ const Details = () => {
                 </View>
               </View>
               <View style={styles.divider} />
-              <Text style={styles.description}>{news.description}</Text>
+              {news.description != null ? (
+                <Text style={styles.description}>{news.description}</Text>
+              ) : (
+                <Text style={styles.description}>Empty description</Text>
+              )}
             </View>
           </ScrollView>
         ))
