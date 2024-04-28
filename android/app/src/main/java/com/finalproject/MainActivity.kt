@@ -5,6 +5,7 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import android.os.Bundle;
+import com.zoontek.rnbootsplash.RNBootSplash;
 
 class MainActivity : ReactActivity() {
 
@@ -14,7 +15,8 @@ class MainActivity : ReactActivity() {
    */
   override fun getMainComponentName(): String = "FinalProject"
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(null)
+    RNBootSplash.init(this, R.style.BootTheme)
+    super.onCreate(savedInstanceState)
   }
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
