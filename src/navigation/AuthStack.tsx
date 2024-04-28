@@ -1,7 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import FavoriteScreen from '../screens/FavoriteScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -22,16 +21,6 @@ const AuthStack = () => {
           tabBarActiveTintColor: '#eb5d0c',
           tabBarIcon: ({color}) => (
             <Icon name="newspaper-o" size={30} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Favorite"
-        component={FavoriteScreen}
-        options={{
-          tabBarActiveTintColor: '#eb5d0c',
-          tabBarIcon: ({color}) => (
-            <Icon name="star-o" size={30} color={color} />
           ),
         }}
       />

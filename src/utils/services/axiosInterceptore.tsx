@@ -49,7 +49,7 @@ const setupInterceptors = (store: any) => {
           );
           const accessToken = response.data.accessToken;
 
-          // Storage the token
+          // Store the token
           store.dispatch(setAccessToken(response.data.accessToken));
           api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 

@@ -18,7 +18,6 @@ import * as yup from 'yup';
 import styles from '../../utils/authStyles';
 import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
 import axios, {AxiosError} from 'axios';
-// import {setAuthToken} from '../../redux/slices/authSlice';
 import {useDispatch} from 'react-redux';
 import {UserCredentials} from '../../types/userCredientials';
 import handleApiResponseError from '../../utils/authErrorHandle';
@@ -69,12 +68,6 @@ const LogIn = () => {
       if (response.status === 200) {
         dispatch(setAccessToken(response.data.accessToken));
         dispatch(setRefreshToken(response.data.refreshToken));
-        // dispatch(
-        //   setTokens({
-        //     authToken: response.data.accessToken,
-        //     refreshToken: response.data.refreshToken,
-        //   }),
-        // );
       }
     } catch (error) {
       handleApiResponseError(error as AxiosError, 'login');

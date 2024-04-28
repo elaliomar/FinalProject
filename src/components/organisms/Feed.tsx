@@ -19,7 +19,6 @@ const Feed = () => {
       await api
         .get(`/posts?page=${page}`)
         .then(response => {
-          // console.log('fetched successful ', response.data);
           console.log('length', response.data.results.length);
           if (response.data.results.length > 0) {
             setPage(prevPage => prevPage + 1);
@@ -50,10 +49,7 @@ const Feed = () => {
   const renderFooter = () => {
     return (
       <View style={styles.loaderView}>
-        {isLoading ? (
-          // <ActivityIndicator color={'#eb5d0c'} style={styles.loader} />
-          <CustomLoader />
-        ) : null}
+        {isLoading ? <CustomLoader /> : null}
       </View>
     );
   };
