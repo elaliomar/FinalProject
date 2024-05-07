@@ -1,12 +1,41 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
-
-# Getting Started
+# News24 Mobile App: built using react native CLI 
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-## Step 1: Start the Metro Server
+## Description
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+Welcome to the News24 mobile application, your gateway to the latest happenings around the world! Our app offers a seamless experience across four key screens: Signup, Login, Feed, and Details.
+
+### Features:
+
+- Signup: Users can easily create their own accounts through a simple signup process, setting the stage for personalized news browsing.
+- Login: Once registered, users can access the full functionality of the app by logging in securely.
+- Feed: Dive into the latest news updates from around the globe, conveniently curated for easy browsing.
+- Details: Get in-depth insights into each news story with comprehensive details available at your fingertips.
+
+### Key Tools and Packages Utilized:
+
+- React Native: Leveraging the power of this versatile framework for building cross-platform mobile applications.
+- Redux Toolkit: For state management.
+- Async Storage: Seamlessly save user tokens for hassle-free login experiences and access to authorized content.
+- Custom Backend API: Our dedicated APIs handle essential tasks such as login, signup, and token refresh, ensuring uninterrupted app usage.
+- React Native Reanimated: Elevating user experience with fluid animations like fade-in, fade-out, and skeleton loaders.
+- React Navigation: Facilitating effortless navigation between screens within a structured stack.
+- React Native Vector Icons: Enhancing visual appeal and accessibility with a diverse range of iconography.
+- Platform API: Enabling platform-specific rendering for a tailored user experience based on the operating system.
+- Share from React Native: Empowering users to share interesting news pieces with friends seamlessly.
+- React Native Bootsplash: Creating an engaging splash screen to captivate users from the moment they launch the app.
+- App Icons: Adding a touch of professionalism and brand identity with custom-designed app icons.
+
+### Code Structure:
+
+Embracing the atomic pattern, our codebase is meticulously organized into atoms, molecules, and organisms, ensuring clarity, maintainability, and scalability for the development team. This structured approach enhances code reusability and accelerates the development process, resulting in a robust and efficient mobile application.
+
+## How to Install the Project
+To get started with the News24 mobile application, follow these simple steps:
+
+- Clone the project repository from the existing source.
+- Once you've cloned the project, navigate to the project directory in your terminal and install all the necessary dependencies. You can do this using npm or yarn, depending on your preference.
 
 To start Metro, run the following command from the _root_ of your React Native project:
 
@@ -18,7 +47,7 @@ npm start
 yarn start
 ```
 
-## Step 2: Start your Application
+## How to Run the Project
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
@@ -46,34 +75,15 @@ If everything is set up _correctly_, you should see your new app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+## Credits
 
-Now that you have successfully run the app, let's modify it.
+The News24 mobile application was created by Omar El Ali. We would like to extend our gratitude to the following individuals and organizations for their contributions to this project:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+- [Eurisko mobility](https://eurisko.net/)
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Special thanks to the open-source community for their invaluable support.
 
-## Congratulations! :tada:
+## License
 
-You've successfully run and modified your React Native App. :partying_face:
+This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LICENSE) file for details.
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
