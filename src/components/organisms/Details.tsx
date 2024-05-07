@@ -16,7 +16,7 @@ import {api} from '../../utils/services/axiosInterceptore';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import onShare from '../../utils/ShareNews';
-import styles from '../../utils/detailsStyles';
+import styles from '../../styles/detailsStyles';
 
 const Details = () => {
   const route = useRoute<RouteProp<authBottomStackParamList, 'Details'>>();
@@ -27,7 +27,6 @@ const Details = () => {
 
   const fetchPosts = async () => {
     await api.get(`/posts?pageSize=${110}`).then(res => {
-      console.log('length', res.data.results.length);
       setServerData(res.data.results);
     });
   };

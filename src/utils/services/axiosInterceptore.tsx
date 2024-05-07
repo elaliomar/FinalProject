@@ -1,16 +1,22 @@
 import axios from 'axios';
-import {clearTokens, setAccessToken} from '../../redux/slices/authSlice';
+import {clearTokens, setTokens} from '../../redux/slices/authSlice';
+import {RootState} from '../../redux/store';
+import {Dispatch} from '@reduxjs/toolkit';
+import {API_KEY} from '@env';
 
 const api = axios.create({
-  baseURL: 'https://backend-practice.euriskomobility.me',
+  baseURL: API_KEY,
 });
 
 // Add the interceptors
-const setupInterceptors = (store: any) => {
+
+const setupInterceptors = (store: {
+  getState: () => RootState;
+  dispatch: Dispatch<any>;
+}) => {
   api.interceptors.request.use(
     config => {
-      const state = store.getState();
-      const accessToken = state.auth.accessToken;
+      const {accessToken} = store.getState().auth;
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
@@ -32,8 +38,7 @@ const setupInterceptors = (store: any) => {
       ) {
         originalRequest._retry = true;
 
-        const state = store.getState();
-        const refreshToken = state.auth.refreshToken;
+        const {refreshToken} = store.getState().auth;
         if (!refreshToken) {
           // redirect to login
           store.dispatch(clearTokens());
@@ -41,16 +46,18 @@ const setupInterceptors = (store: any) => {
         }
 
         try {
-          const response = await axios.post(
-            'https://backend-practice.euriskomobility.me/refresh-token',
-            {
-              refreshToken: refreshToken,
-            },
-          );
-          const accessToken = response.data.accessToken;
+          const response = await axios.post(`${API_KEY}/refresh-token`, {
+            refreshToken: refreshToken,
+          });
+          const {accessToken} = response.data;
 
           // Store the token
-          store.dispatch(setAccessToken(response.data.accessToken));
+          store.dispatch(
+            setTokens({
+              accessToken,
+              refreshToken,
+            }),
+          );
           api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
           // Send again the original request

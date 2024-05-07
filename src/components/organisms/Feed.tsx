@@ -19,7 +19,6 @@ const Feed = () => {
       await api
         .get(`/posts?page=${page}`)
         .then(response => {
-          console.log('length', response.data.results.length);
           if (response.data.results.length > 0) {
             setPage(prevPage => prevPage + 1);
             setServerData(prevData => [

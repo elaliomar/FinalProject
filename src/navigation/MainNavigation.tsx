@@ -5,8 +5,11 @@ import UnAuthStack from './UnAuthStack';
 import AuthStack from './AuthStack';
 
 const MainNavigation = () => {
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
-  return accessToken ? <AuthStack /> : <UnAuthStack />;
+  const {accessToken, refreshToken} = useSelector(
+    (state: RootState) => state.auth,
+  );
+  const isAuthenticated = accessToken && refreshToken;
+  return isAuthenticated ? <AuthStack /> : <UnAuthStack />;
 };
 
 export default MainNavigation;

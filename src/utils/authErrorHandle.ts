@@ -11,7 +11,7 @@ const handleApiResponseError = (error: AxiosError, context: 'login' | 'signup' )
                 break;
             case 200:
                 if (context === 'login') {
-                    console.log("New access token generated.");
+                    Alert.alert("New access token generated.");
                 }
                 break;
             case 400:
@@ -31,7 +31,6 @@ const handleApiResponseError = (error: AxiosError, context: 'login' | 'signup' )
                 break;
             default:
                 Alert.alert("Error", "An unexpected error occurred. Please try again.");
-                console.error("An unexpected error occurred:", error);
                 break;
         }
     } else {
